@@ -61,7 +61,6 @@ Then if you want detail:
 
 - Do not generate a polished package without disclosing open deal issues.
 - Do not mark the package "ready" if `run-deal-checks.py` fails or
-  the readiness check shows `blocked`. The Stop hook will block the
-  agent from finishing in that state.
+  the readiness check shows `blocked`.
 - Do not bury critical findings in appendices. They go in the executive
   summary and on the executive dashboard.

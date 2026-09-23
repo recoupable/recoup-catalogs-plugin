@@ -160,9 +160,9 @@ python3 scripts/validate-dashboard.py deals/{deal-id}
 ```
 
 If the validator returns `status: errors_found`, **read the errors,
-fix the dashboard, re-run.** Do not skip. The Stop hook blocks the
-agent from finishing if `DASHBOARD.html` does not exist or the
-validator does not pass.
+fix the dashboard, re-run.** Do not skip. Do not claim completion until `DASHBOARD.html` exists and the
+validator passes. Pausing for background work or missing input is allowed;
+report the pending work without claiming readiness.
 
 ### Phase 6 — IC memo + readiness gate
 

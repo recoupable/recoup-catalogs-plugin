@@ -84,11 +84,8 @@ Validator: <ok | errors_found>
 - The dashboard is the customer-facing artifact. Apply the quality
   bar in `skills/recoup-catalog-dashboard/SKILL.md` — hierarchy,
   restraint, accessibility, responsiveness.
-- Do not skip the validator. The Stop hook (Gate B) blocks the agent
-  from finishing an end-to-end run if `DASHBOARD.html` does not pass
-  validation; this scoped command stops cleanly after a single phase
-  but the validator still has to pass for the dashboard to be
-  trustworthy.
+- Do not skip the validator. Do not claim the dashboard is ready
+  until `DASHBOARD.html` passes validation.
 - Do not mutate `source/` files (the PreToolUse hook denies this
   anyway).
 - If you discover that workpapers are stale (e.g., findings have
