@@ -53,8 +53,7 @@ Open: deals/{deal-id}/DASHBOARD.html
 
 ## Rules
 
-- Do not mark a package complete if validation fails. The Stop hook will
-  block the agent from finishing if the package is claimed ready while
+- Do not mark a package complete if validation fails. Do not claim readiness while
   any open critical finding exists.
 - Do not silently fix issues the QC reviewer found — surface them so the
   user can decide.

@@ -186,8 +186,8 @@ designer's eye:
    page. Use Chart.js, D3, or whatever fits.
 3. Run `python3 scripts/validate-dashboard.py deals/{deal-id}`.
 4. If the validator returns errors, fix and re-run. Do not skip.
-5. The Stop hook will block the agent from finishing if `DASHBOARD.html`
-   does not exist or the validator does not pass.
+5. Do not claim completion unless `DASHBOARD.html` exists and the
+   validator passes.
 
 ## What this skill replaces
 

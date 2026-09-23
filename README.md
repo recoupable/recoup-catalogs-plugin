@@ -27,8 +27,7 @@ Then **restart your Claude Code session** so `hooks/hooks.json` loads.
    `https://github.com/recoupable/recoup-catalogs-plugin`
 3. Approve the requested tool permissions (`Read`, `Write`, `Bash` —
    needed to run the validator scripts).
-4. **Restart the Cowork session** so the PreToolUse and Stop hooks
-   load.
+4. **Restart the Cowork session** so the PreToolUse source-file protection loads.
 5. Confirm install: type `/plugin` and check that
    `recoup-catalogs-plugin` is listed.
 
@@ -196,25 +195,17 @@ narrative structure, depth. After the agent writes
    `data-derived` attribute (or any ancestor does). Unverified
    numerical claims fail the validator.
 
-### Two hooks defined in `hooks/hooks.json`
+### Source-file protection and completion checks
 
-- **PreToolUse `protect-source-files.sh`** — denies any
-  `Write`/`Edit`/`MultiEdit` whose path matches `*/deals/*/source/*`.
+- **PreToolUse `protect-source-files.sh`** denies writes into `deals/*/source/*`.
+- **No catalog Stop hook is installed.** Readiness and dashboard validators remain
+  required before claiming a deal package is ready. The assistant may pause for
+  background processing, external systems, or user input without a stop-review loop.
 
-- **Stop hook (prompt-based, two gates)**.
-  - Gate A (completion claims) — when the agent claims a package is
-    "ready", the hook verifies that `run-deal-checks.py` ran
-    cleanly, the readiness check isn't `blocked`, `assumptions.yaml`
-    and `evidence-ledger.json` exist, findings aren't silently
-    dropped, and memo claims trace to evidence.
-  - Gate B (mid-workflow progress) — when the user launched
-    `/recoup-catalog-deal` or `/recoup-catalog-demo`, the hook blocks the
-    agent from stopping until `DASHBOARD.html` exists **and**
-    `validate-dashboard.py` returned `status: ok`. This is what
-    prevents the agent from quitting after Phase 2 with "want me to
-    continue?"
-
-Restart your session after editing `hooks/hooks.json`.
+**Upgrading from 0.3.0:** update the plugin to 0.3.1 and start a new session to
+unload the previous Stop hook. For organization-managed installs, the administrator
+must publish the updated plugin. If the old reviewer still appears in a new
+session, check for another installed copy of `recoup-catalogs-plugin`.
 
 ## Development
 
@@ -273,7 +264,7 @@ recoup-catalogs-plugin/
 ├── fixtures/
 │   ├── demo-data-room/         # Synthetic catalog used by /recoup-catalog-demo
 │   └── golden/                 # Per-provider canonical input/output pairs
-├── hooks/                      # PreToolUse + Stop guardrails
+├── hooks/                      # PreToolUse source-file protection
 ├── references/                 # Domain knowledge (workflow, red flags, normalization, tooling)
 ├── scripts/                    # Deterministic Python — validators only, no renderers
 ├── skills/                     # Loaded by description-matching at runtime
